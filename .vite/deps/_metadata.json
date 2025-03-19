@@ -1,0 +1,40 @@
+{
+  "hash": "1098e647",
+  "configHash": "13590820",
+  "lockfileHash": "24aa1796",
+  "browserHash": "110e4a38",
+  "optimized": {
+    "react/jsx-dev-runtime": {
+      "src": "../../node_modules/react/jsx-dev-runtime.js",
+      "file": "react_jsx-dev-runtime.js",
+      "fileHash": "eb948c84",
+      "needsInterop": true
+    },
+    "react": {
+      "src": "../../node_modules/react/index.js",
+      "file": "react.js",
+      "fileHash": "aecbee1a",
+      "needsInterop": true
+    },
+    "react-dom/client": {
+      "src": "../../node_modules/react-dom/client.js",
+      "file": "react-dom_client.js",
+      "fileHash": "6514e64e",
+      "needsInterop": true
+    },
+    "@douyinfe/semi-ui": {
+      "src": "../../node_modules/@douyinfe/semi-ui/lib/es/index.js",
+      "file": "@douyinfe_semi-ui.js",
+      "fileHash": "efc67b44",
+      "needsInterop": false
+    }
+  },
+  "chunks": {
+    "chunk-TFANCKUT": {
+      "file": "chunk-TFANCKUT.js"
+    },
+    "chunk-LABQ442N": {
+      "file": "chunk-LABQ442N.js"
+    }
+  }
+}
