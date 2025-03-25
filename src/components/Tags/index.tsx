@@ -1,10 +1,10 @@
-import { Tag } from "../../types/ArtifactsTypes.ts";
+import { StoryTag } from "../../types/ArtifactsTypes.ts";
 import { TagGroup } from "@douyinfe/semi-ui";
 import {TagProps} from "@douyinfe/semi-ui/lib/es/tag";
 import http from "../../http.ts";
 import {useNavigate, useParams} from "react-router-dom";
 
-const Tags = ({ tagList, maxNum, canBeDelete, canOpen }: { tagList: Tag[] | undefined, maxNum: number, canBeDelete: boolean, canOpen: boolean}) => {
+const Tags = ({ tagList, maxNum, canBeDelete, canOpen }: { tagList: StoryTag[] | undefined, maxNum: number, canBeDelete: boolean, canOpen: boolean}) => {
   const { storyId: id } = useParams();
   const tagGroupStyle = {
     display: "flex",
@@ -29,7 +29,7 @@ const Tags = ({ tagList, maxNum, canBeDelete, canOpen }: { tagList: Tag[] | unde
     return colorOptions[1];
   };
 
-  const formatTags = (tags: Tag[] | undefined): TagProps[] => {
+  const formatTags = (tags: StoryTag[] | undefined): TagProps[] => {
     if (!tags) return [];
     return tags.map(tag => ({
       tagKey: tag.id,
