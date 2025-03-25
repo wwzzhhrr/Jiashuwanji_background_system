@@ -13,10 +13,10 @@ export interface Artifact {
   createTime: string;
   deleted: boolean;
   collected: boolean;
-  tags: Tag[];
+  tags: storyTag[];
 }
 
-export interface Tag {
+export interface storyTag {
   id: number;
   tagName: string;
 }
@@ -42,7 +42,7 @@ export interface StoryDetail {
   avatarUrl: string;
   status: number;
   createTime: string;
-  tags: Tag[];
+  tags: storyTag[];
   deleted: boolean;
   collected: boolean;
 }
