@@ -4,7 +4,7 @@ import {useEffect, useState} from "react";
 import {AutoComplete, Input, Modal} from '@douyinfe/semi-ui';
 import { IconSearch } from "@douyinfe/semi-icons";
 import http from "../../http.ts";
-import {ApiResponse, StoryDetail, Tag} from '../../types/ArtifactsTypes.ts';
+import {ApiResponse, CollectResponse, StoryDetail, Tag} from '../../types/ArtifactsTypes.ts';
 import { Typography } from '@douyinfe/semi-ui';
 import {useNavigate} from "react-router-dom";
 import Tags from "../Tags";
@@ -20,8 +20,12 @@ const ArtifactController = ()=>{
   const [storyDetail, setStoryDetail] = useState<StoryDetail | null>(null)
   const [filteredTags, setFilteredTags] = useState<Tag[]|undefined>([]);
   const [allTags, setAllTags] = useState<Tag[]|undefined>([]);
+  const [isCollected, setIsCollected] = useState(false);
   useEffect(()=> {
-    http.get<ApiResponse<StoryDetail>>(`http://localhost:8080/artifacts/${id}`).then((res) => {setStoryDetail(res.data.data)});
+    http.get<ApiResponse<StoryDetail>>(`http://localhost:8080/artifacts/${id}`).then((res) => {
+      setStoryDetail(res.data.data);
+      setIsCollected(res.data.data.collected);
+    });
     http.get<ApiResponse<Tag[]>>(`http://localhost:8080/tags`).then((res) => {setAllTags(res.data.data)});
   }, []);
   useEffect(()=>{console.log(inputValue)}, [inputValue])
@@ -47,14 +51,24 @@ const ArtifactController = ()=>{
         <Title heading={1}>{storyDetail?.storyTeller}</Title>
         <IconStar size="extra-large"
                   style={{
-                    color: storyDetail?.collected ? '#FFC300' : '#E6E8EA',
+                    color: isCollected ? '#FFC300' : '#E6E8EA',
                     transform: hoverState.star ? 'scale(1.15)' : 'none',
                     transition: 'all 0.3s ease',
                     cursor: 'pointer'
                   }}
                   onMouseEnter={() => setHoverState(v => ({...v, star: true}))}
                   onMouseLeave={() => setHoverState(v => ({...v, star: false}))}
-                  onClick={() => {http.patch(`/artifacts/${id}/collection`); navigate(0)
+                  onClick={() => {
+                    http.patch<ApiResponse<CollectResponse>>(`/artifacts/${id}/collection`)
+                        .then((res)=>{
+                          if(res.data.message === "Success"){
+                            setIsCollected(res.data.data.isCollected);
+                            console.log(res.data.data.isCollected)
+                            console.log(isCollected)
+
+                          }
+                        })
+
                   }}
         />
         <IconDelete

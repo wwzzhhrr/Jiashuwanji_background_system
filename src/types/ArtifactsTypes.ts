@@ -4,6 +4,17 @@ export interface ApiResponse<T> {
   data: T;
 }
 
+export interface CollectResponse {
+  "isCollected": boolean;
+}
+
+export interface User {
+  id: string;
+  defaultName: string;
+  email: string;
+}
+
+
 export interface Artifact {
   id: number;
   storyTeller: string;
@@ -46,3 +57,4 @@ export interface StoryDetail {
   deleted: boolean;
   collected: boolean;
 }
+

@@ -25,12 +25,10 @@ const Tags = ({ tagList, maxNum, canBeDelete, canOpen }: { tagList: Tag[] | unde
     "orange",
   ];
 
-  // 获取随机颜色
   const getRandomColor = (): TagProps["color"] => {
-    return colorOptions[Math.floor(Math.random() * colorOptions.length)];
+    return colorOptions[1];
   };
 
-  // 格式化标签数据
   const formatTags = (tags: Tag[] | undefined): TagProps[] => {
     if (!tags) return [];
     return tags.map(tag => ({

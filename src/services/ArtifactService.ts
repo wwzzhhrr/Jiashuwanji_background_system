@@ -10,7 +10,6 @@ export const useFetchArtifacts = () => {
   return async (search: string, page: number, size: number) => {
     try {
       console.log(`Fetching artifacts with params: page=${page}, size=${size}, search=${search}`);
-      
       const response = await http.get<ApiResponse<ArtifactsResponse>>('/artifacts', {
         params: {
           page,
