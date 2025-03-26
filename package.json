@@ -9,7 +9,6 @@
     "lint": "eslint .",
     "preview": "vite preview"
   },
-
   "dependencies": {
     "@douyinfe/semi-ui": "^2.76.0",
     "axios": "^1.7.9",
@@ -17,7 +16,6 @@
     "react-dom": "^18.3.1",
     "react-router-dom": "^7.3.0"
   },
-
   "proxy": "http://localhost:8080",
   "devDependencies": {
     "@eslint/js": "^9.17.0",

@@ -1,7 +1,8 @@
 import {useContext} from "react";
 import http from '../http';
-import {ApiResponse, ArtifactsResponse} from '../types/ArtifactsTypes.ts';
+import {ApiResponse, ArtifactsResponse,FileUploadResponse, FileAddResponse, FileListResponse, DeleteFileResponse} from '../types/ArtifactsTypes.ts';
 import {ArtifactContext} from "../context/ArtifactContext.tsx";
+import axios from "axios";
 
 export const useFetchArtifacts = () => {
   const context = useContext(ArtifactContext);
@@ -43,4 +44,36 @@ export const useFetchArtifacts = () => {
       console.error('Error fetching artifacts:', error);
     }
   };
+};
+
+// 上传文件
+export const uploadFile = async (file: File): Promise<FileUploadResponse> => {
+  const formData = new FormData();
+  formData.append('file', file);
+  const response = await axios.post<FileUploadResponse>('http://localhost:8080/upload', formData, {
+    headers: { 'Content-Type': 'multipart/form-data' },
+  });
+  return response.data;
+};
+
+// 添加文件到数据库
+export const addFileToDatabase = async (data: {
+  artifactId: number;
+  fileType: string;
+  fileUrl: string;
+  fileName: string;
+}): Promise<FileAddResponse> => {
+  const response = await axios.post<FileAddResponse>('http://localhost:8080/files', data);
+  return response.data;
+};
+
+// 获取文件列表
+export const fetchFilesByArtifactId = async (artifactId: number): Promise<FileListResponse> => {
+  const response = await axios.get<FileListResponse>(`http://localhost:8080/files/artifact/${artifactId}`);
+  return response.data;
+};
+
+export const deleteFile = async (fileId: number): Promise<DeleteFileResponse> => {
+  const response = await axios.delete<DeleteFileResponse>(`http://localhost:8080/files/${fileId}`);
+  return response.data;
 };

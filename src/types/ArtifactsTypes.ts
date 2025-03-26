@@ -46,3 +46,37 @@ export interface StoryDetail {
   deleted: boolean;
   collected: boolean;
 }
+
+// src/types/index.ts
+export interface ArtifactFile {
+  id: number;
+  artifact: { id: number };
+  fileType: string;
+  fileUrl: string;
+  fileName: string;
+  createdAt: string;
+}
+
+export interface FileUploadResponse {
+  code: number;
+  message: string;
+  data: string; // 文件 URL
+}
+
+export interface FileAddResponse {
+  code: number;
+  message: string;
+  data: ArtifactFile;
+}
+
+export interface FileListResponse {
+  code: number;
+  message: string;
+  data: ArtifactFile[];
+}
+
+export interface DeleteFileResponse {
+  code: number;
+  message: string;
+  data: null;
+}
