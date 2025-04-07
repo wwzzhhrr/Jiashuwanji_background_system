@@ -31,7 +31,7 @@ const FileList: React.FC<FileListProps> = ({ artifactId, refreshKey }) => {
       dataIndex: 'fileType',
     },
     {
-      title: '文件 URL',
+      title: '文件展示',
       dataIndex: 'fileUrl',
       render: (text: string, record: any) => {
         // 判断文件类型是否为 audio/x-m4a
