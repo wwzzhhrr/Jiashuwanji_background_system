@@ -11,9 +11,12 @@
   },
   "dependencies": {
     "@douyinfe/semi-ui": "^2.76.0",
+    "@fingerprintjs/fingerprintjs": "^4.6.1",
     "axios": "^1.7.9",
+    "jwt-decode": "^4.0.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "react-infinite-scroll-component": "^6.1.0",
     "react-router-dom": "^7.3.0"
   },
   "proxy": "http://localhost:8080",
@@ -22,6 +25,7 @@
     "@types/axios": "^0.9.36",
     "@types/react": "^18.3.18",
     "@types/react-dom": "^18.3.5",
+    "@types/react-infinite-scroller": "^1.2.5",
     "@vitejs/plugin-react": "^4.3.4",
     "eslint": "^9.17.0",
     "eslint-plugin-react-hooks": "^5.0.0",

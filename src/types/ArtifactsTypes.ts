@@ -4,6 +4,17 @@ export interface ApiResponse<T> {
   data: T;
 }
 
+export interface CollectResponse {
+  "isCollected": boolean;
+}
+
+export interface User {
+  id: string;
+  defaultName: string;
+  email: string;
+}
+
+
 export interface Artifact {
   id: number;
   storyTeller: string;
@@ -13,10 +24,10 @@ export interface Artifact {
   createTime: string;
   deleted: boolean;
   collected: boolean;
-  tags: Tag[];
+  tags: StoryTag[];
 }
 
-export interface Tag {
+export interface StoryTag {
   id: number;
   tagName: string;
 }
@@ -42,7 +53,7 @@ export interface StoryDetail {
   avatarUrl: string;
   status: number;
   createTime: string;
-  tags: Tag[];
+  tags: StoryTag[];
   deleted: boolean;
   collected: boolean;
 }
@@ -80,3 +91,4 @@ export interface DeleteFileResponse {
   message: string;
   data: null;
 }
+

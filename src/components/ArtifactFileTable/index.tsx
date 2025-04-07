@@ -1,4 +1,3 @@
-// src/components/FileList.tsx
 import React, { useEffect, useState } from 'react';
 import { Table, Spin, Toast, Button, AudioPlayer} from '@douyinfe/semi-ui';
 import { ColumnProps } from '@douyinfe/semi-ui/lib/es/table';
@@ -37,18 +36,18 @@ const FileList: React.FC<FileListProps> = ({ artifactId, refreshKey }) => {
         // 判断文件类型是否为 audio/x-m4a
         if (record.fileType === 'audio/x-m4a') {
           return (
-            <AudioPlayer
-              autoPlay={false}
-              audioUrl={text} // 使用 fileUrl 作为 audioUrl
-              style={{ width: '100%' }} // 调整样式，确保在表格中显示正常
-            />
+              <AudioPlayer
+                  autoPlay={false}
+                  audioUrl={text} // 使用 fileUrl 作为 audioUrl
+                  style={{ width: '100%' }} // 调整样式，确保在表格中显示正常
+              />
           );
         }
         // 其他文件类型显示为可点击链接
         return (
-          <a href={text} target="_blank" rel="noopener noreferrer">
-            {text}
-          </a>
+            <a href={text} target="_blank" rel="noopener noreferrer">
+              {text}
+            </a>
         );
       },
     },
@@ -123,16 +122,26 @@ const FileList: React.FC<FileListProps> = ({ artifactId, refreshKey }) => {
   };
 
   return (
-    <div style={{ padding: 20 }}>
-      <div style={{ marginBottom: 20 }}>
-        <Button
-          theme="solid"
-          type="danger"
-          onClick={handleDelete}
-          disabled={selectedRowKeys.length === 0}
-        >
-          删除选中文件
-        </Button>
+      <div style={{ padding: 20 }}>
+        <div style={{ marginBottom: 20 }}>
+          <Button
+              theme="solid"
+              type="danger"
+              onClick={handleDelete}
+              disabled={selectedRowKeys.length === 0}
+          >
+            删除选中文件
+          </Button>
+        </div>
+        <Spin spinning={loading}>
+          <Table
+              columns={columns}
+              dataSource={fileList}
+              rowKey="id"
+              pagination={pagination}
+              rowSelection={rowSelection}
+          />
+        </Spin>
       </div>
       <Spin spinning={loading}>
         <Table

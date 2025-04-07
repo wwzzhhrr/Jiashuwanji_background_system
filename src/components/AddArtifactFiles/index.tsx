@@ -65,27 +65,27 @@ const FileUpload: React.FC<FileUploadProps> = ({ artifactId, onFileAdded }) => {
   };
 
   return (
-    <div style={{ padding: 20 }}>
-      <Upload
-        action={uploadAction}
-        name="file"
-        onSuccess={handleUploadSuccess}
-        onError={handleUploadError}
-        multiple={false}
-      >
-        <Button icon={<IconUpload />} theme="light">
-          点击上传
+      <div style={{ padding: 20 }}>
+        <Upload
+            action={uploadAction}
+            name="file"
+            onSuccess={handleUploadSuccess}
+            onError={handleUploadError}
+            multiple={false}
+        >
+          <Button icon={<IconUpload />} theme="light">
+            点击上传
+          </Button>
+        </Upload>
+        <Button
+            theme="solid"
+            style={{ marginTop: 20 }}
+            onClick={handleAddFile}
+            disabled={!uploadedFileUrl}
+        >
+          给你的作品添加文件
         </Button>
-      </Upload>
-      <Button
-        theme="solid"
-        style={{ marginTop: 20 }}
-        onClick={handleAddFile}
-        disabled={!uploadedFileUrl}
-      >
-        给你的作品添加文件
-      </Button>
-    </div>
+      </div>
   );
 };
 

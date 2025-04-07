@@ -11,7 +11,6 @@ export const useFetchArtifacts = () => {
   return async (search: string, page: number, size: number) => {
     try {
       console.log(`Fetching artifacts with params: page=${page}, size=${size}, search=${search}`);
-      
       const response = await http.get<ApiResponse<ArtifactsResponse>>('/artifacts', {
         params: {
           page,
@@ -69,7 +68,7 @@ export const addFileToDatabase = async (data: {
 
 // 获取文件列表
 export const fetchFilesByArtifactId = async (artifactId: number): Promise<FileListResponse> => {
-  const response = await axios.get<FileListResponse>(`http://localhost:8080/files/artifact/${artifactId}`);
+  const response = await http.get<FileListResponse>(`http://localhost:8080/files/artifact/${artifactId}`);
   return response.data;
 };
 
