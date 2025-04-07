@@ -5,10 +5,11 @@ import { IconUpload } from '@douyinfe/semi-icons';
 import { uploadFile, addFileToDatabase } from '../../services/ArtifactService';
 
 interface FileUploadProps {
-  artifactId: number; // 动态传入 artifactId
+  artifactId: number;
+  onFileAdded?: () => void; // 添加回调属性
 }
 
-const FileUpload: React.FC<FileUploadProps> = ({ artifactId }) => {
+const FileUpload: React.FC<FileUploadProps> = ({ artifactId, onFileAdded }) => {
   const [uploadedFileUrl, setUploadedFileUrl] = useState<string | null>(null);
   const [uploadedFileName, setUploadedFileName] = useState<string | null>(null);
   const [uploadedFileType, setUploadedFileType] = useState<string | null>(null);
@@ -51,6 +52,10 @@ const FileUpload: React.FC<FileUploadProps> = ({ artifactId }) => {
         setUploadedFileUrl(null);
         setUploadedFileName(null);
         setUploadedFileType(null);
+        // 文件添加成功后，调用 onFileAdded 触发刷新
+        if (onFileAdded) {
+          onFileAdded();
+        }
       } else {
         Toast.error('文件添加失败: ' + response.message);
       }

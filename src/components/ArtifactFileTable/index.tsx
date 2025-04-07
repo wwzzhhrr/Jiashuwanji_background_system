@@ -1,18 +1,20 @@
 // src/components/FileList.tsx
 import React, { useEffect, useState } from 'react';
-import { Table, Spin, Toast, Button} from '@douyinfe/semi-ui';
+import { Table, Spin, Toast, Button, AudioPlayer} from '@douyinfe/semi-ui';
 import { ColumnProps } from '@douyinfe/semi-ui/lib/es/table';
 import { fetchFilesByArtifactId, deleteFile } from '../../services/ArtifactService.ts';
 import { ArtifactFile } from '../../types/ArtifactsTypes.ts';
 
 interface FileListProps {
   artifactId: number;
+  refreshKey?: number; // 添加 refreshKey 属性
 }
 
-const FileList: React.FC<FileListProps> = ({ artifactId }) => {
+const FileList: React.FC<FileListProps> = ({ artifactId, refreshKey }) => {
   const [fileList, setFileList] = useState<ArtifactFile[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
-  const [selectedRowKeys, setSelectedRowKeys] = useState<number[]>([]); // 存储选中的文件 ID
+  const [selectedRowKeys, setSelectedRowKeys] = useState<number[]>([]);
+  const pagination = { pageSize: 5 };
 
   const columns: ColumnProps<ArtifactFile>[] = [
     {
@@ -31,11 +33,24 @@ const FileList: React.FC<FileListProps> = ({ artifactId }) => {
     {
       title: '文件 URL',
       dataIndex: 'fileUrl',
-      render: (text: string) => (
-        <a href={text} target="_blank" rel="noopener noreferrer">
-          {text}
-        </a>
-      ),
+      render: (text: string, record: any) => {
+        // 判断文件类型是否为 audio/x-m4a
+        if (record.fileType === 'audio/x-m4a') {
+          return (
+            <AudioPlayer
+              autoPlay={false}
+              audioUrl={text} // 使用 fileUrl 作为 audioUrl
+              style={{ width: '100%' }} // 调整样式，确保在表格中显示正常
+            />
+          );
+        }
+        // 其他文件类型显示为可点击链接
+        return (
+          <a href={text} target="_blank" rel="noopener noreferrer">
+            {text}
+          </a>
+        );
+      },
     },
     {
       title: '文件名',
@@ -50,8 +65,8 @@ const FileList: React.FC<FileListProps> = ({ artifactId }) => {
 
   const fetchFiles = async () => {
     setLoading(true);
-    setFileList([]); // 清空旧数据
-    setSelectedRowKeys([]); // 清空选中状态
+    setFileList([]);
+    setSelectedRowKeys([]);
     try {
       console.log('FileList: 正在请求 artifactId:', artifactId);
       const response = await fetchFilesByArtifactId(artifactId);
@@ -78,7 +93,6 @@ const FileList: React.FC<FileListProps> = ({ artifactId }) => {
 
     setLoading(true);
     try {
-      // 逐个删除选中的文件
       for (const fileId of selectedRowKeys) {
         const response = await deleteFile(fileId);
         if (response.code !== 0) {
@@ -87,8 +101,8 @@ const FileList: React.FC<FileListProps> = ({ artifactId }) => {
         }
       }
       Toast.success('删除成功');
-      setSelectedRowKeys([]); // 清空选中状态
-      await fetchFiles(); // 刷新文件列表
+      setSelectedRowKeys([]);
+      await fetchFiles();
     } catch (error: any) {
       Toast.error('删除失败: ' + error.message);
     } finally {
@@ -96,11 +110,11 @@ const FileList: React.FC<FileListProps> = ({ artifactId }) => {
     }
   };
 
+  // 当 artifactId 或 refreshKey 变化时，重新加载文件列表
   useEffect(() => {
     fetchFiles();
-  }, [artifactId]);
+  }, [artifactId, refreshKey]);
 
-  // 行选择配置
   const rowSelection = {
     selectedRowKeys,
     onChange: (selectedKeys: (string | number)[] | undefined) => {
@@ -125,8 +139,8 @@ const FileList: React.FC<FileListProps> = ({ artifactId }) => {
           columns={columns}
           dataSource={fileList}
           rowKey="id"
-          pagination={true}
-          rowSelection={rowSelection} // 启用行选择
+          pagination={pagination}
+          rowSelection={rowSelection}
         />
       </Spin>
     </div>
