@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { Upload, Button, Toast } from '@douyinfe/semi-ui';
 import { IconUpload } from '@douyinfe/semi-icons';
-import { uploadFile, addFileToDatabase } from '../../services/ArtifactService';
+import { addFileToDatabase } from '../../services/ArtifactService';
 
 interface FileUploadProps {
   artifactId: number;
