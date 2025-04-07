@@ -1,42 +1,65 @@
-import "./App.css";
 import { Tabs, TabPane } from "@douyinfe/semi-ui";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { createBrowserRouter, redirect, RouterProvider } from "react-router-dom";
+import { jwtDecode } from "jwt-decode";
 import ArtifactsTable from "./components/ArtifactsTable";
 import ArtifactController from "./components/ArtifactController";
 import UserList from "./components/UserList";
 import Login from "./components/Login";
-import AuthChecker from "./components/AuthChecker";
+import SearchBar from "./components/SearchBar";
+import {TrackingProvider} from "./components/demo";
+import {Demo} from "./components/demo/demo.tsx";
+import {Statistics} from "./components/statistics";
+
+const isTokenValid = (token: string) => {
+  try {
+    const decoded = jwtDecode(token);
+    return decoded.exp! > Date.now() / 1000;
+  } catch {
+    return false;
+  }
+};
 
 const router = createBrowserRouter([
   {
-    path: "",
+    path: "/",
     element: (
-        <>
-          <AuthChecker />
-          <Tabs type="line">
-            <TabPane tab="网站数据" itemKey="0">
-              <UserList />
-            </TabPane>
-            <TabPane tab="作品列表" itemKey="1">
-              <ArtifactsTable />
-            </TabPane>
-          </Tabs>
-        </>
+        <Tabs type="line">
+          <TabPane tab="网页数据" itemKey="0">
+            <Statistics/>
+          </TabPane>
+          <TabPane tab="用户信息" itemKey="1">
+            <UserList />
+          </TabPane>
+          <TabPane tab="作品列表" itemKey="2">
+            <SearchBar />
+            <ArtifactsTable />
+          </TabPane>
+        </Tabs>
     ),
+    loader: () => {
+      const token = localStorage.getItem("auth_token");
+      if (!token || !isTokenValid(token)) {
+        localStorage.removeItem("auth_token");
+        throw redirect("/login");
+      }
+      return null;
+    }
   },
   {
     path: "storyDetail/:storyId",
-    element: (
-        <>
-          <AuthChecker />
-          <ArtifactController />
-        </>
-    ),
+    element: <ArtifactController />
   },
+  { path: "login", element: <Login /> },
   {
-    path: "login",
-    element: <Login />, // 登录页面不需要 AuthChecker
-  },
+    path: "demo",
+    element:
+    <>
+      <TrackingProvider>
+        <Demo/>
+      </TrackingProvider>
+    </>
+
+  }
 ]);
 
 function App() {

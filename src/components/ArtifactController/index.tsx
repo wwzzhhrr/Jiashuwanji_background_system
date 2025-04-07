@@ -1,14 +1,16 @@
 import {useParams} from "react-router-dom";
 import { IconStar, IconDelete } from '@douyinfe/semi-icons';
 import {useEffect, useState} from "react";
-import {AutoComplete, Button, Dropdown, Input, Modal, Tag} from '@douyinfe/semi-ui';
+import {AutoComplete, Button, Dropdown, Input, InputNumber, Modal, Tag} from '@douyinfe/semi-ui';
 import { IconSearch } from "@douyinfe/semi-icons";
 import http from "../../http.ts";
 import {ApiResponse, StoryDetail, StoryTag} from '../../types/ArtifactsTypes.ts';
+import FileList from "../ArtifactFileTable";
 import { Typography } from '@douyinfe/semi-ui';
 import {useNavigate} from "react-router-dom";
 import Tags from "../Tags";
 import { DropDownMenuItem } from "@douyinfe/semi-ui/lib/es/dropdown/index";
+import FileUpload from "../AddArtifactFiles";
 const ArtifactController = ()=>{
   const { storyId: id } = useParams();
   const [ deleted, setDeleted ] = useState(false);
@@ -86,6 +88,7 @@ const ArtifactController = ()=>{
   return (
     <>
       <div style={{display: 'flex', alignItems: "center", gap: '10px'}}>
+        <Button onClick={backButtonOnClick()}>返回</Button>
         <Title heading={1}>{storyDetail?.storyTeller}</Title>
         <IconStar size="extra-large"
                   style={{
@@ -132,7 +135,6 @@ const ArtifactController = ()=>{
           onSelect={(item) => handleSelect(item)}
           placeholder="搜索标签..."
       />
-      <Button onClick={backButtonOnClick()}>返回</Button>
       </div>
 
       <Text>{storyDetail?.intro}...</Text>
@@ -162,6 +164,10 @@ const ArtifactController = ()=>{
         </div>
 
       </Modal>
+      <div>
+        <FileUpload artifactId={Number(id ? id : 0)}/>
+        <FileList artifactId={Number(id ? id : 0)}/>
+      </div>
     </>
   )
 }

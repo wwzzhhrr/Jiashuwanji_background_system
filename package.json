@@ -11,7 +11,9 @@
   },
   "dependencies": {
     "@douyinfe/semi-ui": "^2.76.0",
+    "@fingerprintjs/fingerprintjs": "^4.6.1",
     "axios": "^1.7.9",
+    "jwt-decode": "^4.0.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-infinite-scroll-component": "^6.1.0",

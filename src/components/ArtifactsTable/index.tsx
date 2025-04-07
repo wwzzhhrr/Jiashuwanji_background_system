@@ -1,7 +1,7 @@
 import {Button, Spin, Table} from '@douyinfe/semi-ui';
 import {useContext, useEffect, useState} from 'react';
 import {ArtifactContext} from '../../context/ArtifactContext.tsx';
-import {Artifact, storyTag} from '../../types/ArtifactsTypes.ts';
+import {Artifact, StoryTag} from '../../types/ArtifactsTypes.ts';
 import {processArtifacts} from '../../utils/ArtifactUtils.ts';
 import {useFetchArtifacts} from "../../services/ArtifactService.ts";
 import {ColumnProps} from "@douyinfe/semi-ui/lib/es/table";
@@ -65,7 +65,7 @@ const ArtifactsTable = () => {
     {
       title: '标签Tags',
       dataIndex: 'tags',
-      render: (tags: storyTag[]) => (
+      render: (tags: StoryTag[]) => (
           <Tags tagList={tags} maxNum={2} canBeDelete={false} canOpen={false}/>
       )
     },
@@ -88,7 +88,7 @@ const ArtifactsTable = () => {
           5001: 'disqualified',
 
           6001: 'waiting manual check'
-          
+
         };
         return <span>{statusMap[status as keyof typeof statusMap] || '未知状态'}</span>; // 显式返回JSX元素
       }

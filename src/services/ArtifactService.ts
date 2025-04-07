@@ -68,7 +68,7 @@ export const addFileToDatabase = async (data: {
 
 // 获取文件列表
 export const fetchFilesByArtifactId = async (artifactId: number): Promise<FileListResponse> => {
-  const response = await axios.get<FileListResponse>(`http://localhost:8080/files/artifact/${artifactId}`);
+  const response = await http.get<FileListResponse>(`http://localhost:8080/files/artifact/${artifactId}`);
   return response.data;
 };
 

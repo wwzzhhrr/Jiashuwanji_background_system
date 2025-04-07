@@ -1,7 +1,7 @@
-import { useState, FormEvent } from 'react';
+import {useState, FormEvent, useEffect} from 'react';
 import { useNavigate } from 'react-router-dom';
-import http from '../../http';
 import {ApiResponse} from "../../types/ArtifactsTypes.ts";
+import axios from "axios";
 
 
 interface LoginForm {
@@ -11,6 +11,10 @@ interface LoginForm {
 
 export default function Login() {
   const navigate = useNavigate();
+
+  useEffect(() => {
+    console.log(localStorage.getItem("token"));
+  }, [])
   const [formData, setFormData] = useState<LoginForm>({
     email: '',
     password: '',
@@ -24,7 +28,7 @@ export default function Login() {
     setLoading(true);
 
     try {
-      const response = await http.post<ApiResponse<string>>(`/user/login`, {
+      const response = await axios.post<ApiResponse<string>>(`http://localhost:8080/user/login`, {
         email: formData.email,
         password: formData.password
       });
