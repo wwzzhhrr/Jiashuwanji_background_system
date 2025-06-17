@@ -130,7 +130,7 @@ const FileList: React.FC<FileListProps> = ({ artifactId, refreshKey }) => {
               onClick={handleDelete}
               disabled={selectedRowKeys.length === 0}
           >
-            删除选中文件
+            删除已选中文件
           </Button>
         </div>
         <Spin spinning={loading}>
