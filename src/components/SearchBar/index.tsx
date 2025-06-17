@@ -9,7 +9,7 @@ const SearchTable = () => {
   const fetchArtifacts = useFetchArtifacts();
 
   const handleSearch = async () => {
-    await fetchArtifacts(inputValue, 0, 2, );
+    await fetchArtifacts(inputValue, 0, 2);
   };
 
   useEffect(() => {
